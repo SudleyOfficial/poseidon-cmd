@@ -572,8 +572,66 @@
       color: var(--muted);
     }
 
-    /* ── DISCORD CTA ── */
-    #discord {
+    .script-box {
+      max-width: 680px;
+      margin: 0 auto;
+      background: #06090e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .script-accent-bar {
+      height: 2px;
+      background: linear-gradient(90deg, var(--accent-dim), var(--accent), var(--accent-dim));
+    }
+
+    .script-titlebar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: 36px;
+      background: #0a0e14;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .script-label {
+      font-family: 'Orbitron', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .2em;
+      color: var(--accent);
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid var(--muted);
+      color: var(--dim);
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      cursor: pointer;
+      border-radius: 3px;
+      transition: border-color .15s, color .15s, background .15s;
+    }
+    .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .copy-btn.copied { border-color: var(--green); color: var(--green); }
+
+    .script-body {
+      padding: 20px 20px;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      line-height: 1.6;
+      word-break: break-all;
+      user-select: all;
+    }
+
+    .s-fn   { color: #00d2b4; }
+    .s-punc { color: #469690; }
+    .s-str  { color: #ffbe32; }
       padding: 120px 24px;
       text-align: center;
       position: relative;
@@ -672,9 +730,9 @@
     <ul class="nav-links">
       <li><a href="#features">Features</a></li>
       <li><a href="#commands">Commands</a></li>
-      <li><a href="#discord">Discord</a></li>
+      <li><a href="#discord">Script</a></li>
     </ul>
-    <a class="nav-cta" href="#discord">Get Access</a>
+    <a class="nav-cta" href="#discord">Get Script</a>
   </nav>
 
   <!-- HERO -->
@@ -862,16 +920,25 @@
     </div>
   </section>
 
-  <!-- DISCORD CTA -->
+  <!-- SCRIPT -->
   <section id="discord">
     <div class="reveal">
-      <span class="discord-icon">🌊</span>
-      <h2 class="discord-title">Join the community</h2>
+      <p class="section-label" style="text-align:center">// execute</p>
+      <h2 class="discord-title">Get the Script</h2>
       <p class="discord-sub">
-        Get updates, report bugs, receive your whitelist key,<br/>
-        and connect with other Poseidon users.
+        Paste this into your executor and run it.<br/>
+        Supports any Level 7+ executor.
       </p>
-      <a class="btn-primary" href="https://discord.gg/mgs5jqXM8X" target="_blank" rel="noopener">Join Discord</a>
+      <div class="script-box">
+        <div class="script-accent-bar"></div>
+        <div class="script-titlebar">
+          <span class="script-label">POSEIDON  //  loadstring</span>
+          <button class="copy-btn" id="copyBtn" onclick="copyScript()">Copy</button>
+        </div>
+        <div class="script-body">
+          <span class="s-fn">loadstring</span><span class="s-punc">(</span><span class="s-fn">game</span><span class="s-punc">:</span><span class="s-fn">HttpGet</span><span class="s-punc">(</span><span class="s-str">"https://raw.githubusercontent.com/SudleyOfficial/PoseidonCMD/refs/heads/main/script"</span><span class="s-punc">))()</span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -881,7 +948,7 @@
     <div class="footer-links">
       <a href="#features">Features</a>
       <a href="#commands">Commands</a>
-      <a href="https://discord.gg/mgs5jqXM8X" target="_blank" rel="noopener">Discord</a>
+      <a href="#discord">Script</a>
     </div>
     <span class="footer-copy">// v1.1.0 · deep-sea terminal</span>
   </footer>
@@ -939,6 +1006,17 @@
       if (entries[0].isIntersecting) { runTerminal(); termObserver.disconnect(); }
     }, { threshold: 0.3 });
     termObserver.observe(termBody);
+
+    /* ── Copy script ── */
+    function copyScript() {
+      const script = `loadstring(game:HttpGet("https://raw.githubusercontent.com/SudleyOfficial/PoseidonCMD/refs/heads/main/script"))()`;
+      navigator.clipboard.writeText(script).then(() => {
+        const btn = document.getElementById('copyBtn');
+        btn.textContent = 'Copied ✓';
+        btn.classList.add('copied');
+        setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+      });
+    }
 
     /* ── Tab switching ── */
     function switchTab(id, btn) {
