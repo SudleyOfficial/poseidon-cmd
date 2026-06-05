@@ -256,7 +256,7 @@ async function runTerminal(){
 const termObs=new IntersectionObserver(e=>{if(e[0].isIntersecting){runTerminal();termObs.disconnect();}},{threshold:0.3});
 termObs.observe(termBody);
 function copyScript(){
-  navigator.clipboard.writeText('loadstring(game:HttpGet("https://raw.githubusercontent.com/SudleyOfficial/PoseidonCMD/refs/heads/main/script"))()').then(()=>{
+  navigator.clipboard.writeText('loadstring(game:HttpGet("https://raw.githubusercontent.com/SudleyOfficial/poseidon_cmd/refs/heads/main/README.md"))()').then(()=>{
     const btn=document.getElementById('copyBtn');
     btn.textContent='Copied ✓';btn.classList.add('copied');
     setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('copied');},2000);
